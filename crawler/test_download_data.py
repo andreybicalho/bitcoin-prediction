@@ -9,4 +9,4 @@ def test_get_btc_usd_from_alphavantage():
     dataForSingleDate = dataForAllDays['2017-12-17']
     all_high_price = dataForSingleDate['2a. high (USD)']
     print(f'The highest price is ${all_high_price}')
-    assert float(all_high_price) >= 19872.00
+    assert float(all_high_price) >= 19000.00
