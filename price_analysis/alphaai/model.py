@@ -42,7 +42,7 @@ class NeuralNetwork:
         test_y = np.array(pd.read_csv("features/autoencoded_test_y.csv", index_col=0))
         # test_stock = np.array(pd.read_csv("test_stock.csv"))
 
-        stock_data_test = np.array(pd.read_csv("stock_data_test.csv", index_col=0))
+        stock_data_test = np.array(pd.read_csv("BTC-USD_daily_test.csv", index_col=0))
 
         print(model.evaluate(test_x, test_y))
         prediction_data = []
@@ -56,8 +56,9 @@ class NeuralNetwork:
         stock_data[:] = [i - (float(stock_data[0])-float(stock_data_test[0])) for i in stock_data]
         # stock_data = stock_data - stock_data[0]
         if self.stock_or_return:
-            plt.plot(stock_data)
-            plt.plot(stock_data_test)
+            plt.plot(stock_data, label='Predicted')
+            plt.plot(stock_data_test, label='Groundtruth')
+            plt.legend(loc='lower left')
             stock = pd.DataFrame(stock_data, index=None)
             stock.to_csv("sample_predictions/AAPL_predicted_prices.csv")
             stock_test = pd.DataFrame(stock_data_test, index=None)
