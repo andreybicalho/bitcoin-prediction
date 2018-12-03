@@ -33,7 +33,7 @@ class AutoEncoder:
 
         # print(train_data)
         # autoencoder.summary()
-        autoencoder.fit(train_data, train_data, epochs=1000)
+        autoencoder.fit(train_data, train_data, epochs=500)
 
         encoder.save("models/encoder.h5")
 

@@ -8,7 +8,7 @@ class PreProcessing:
     def __init__(self, split, feature_split):
         self.split = split
         self.feature_split = feature_split
-        self.stock_data = pd.read_csv("stock_data.csv")
+        self.stock_data = pd.read_csv("BTC-USD_daily.csv")
 
     # wavelet transform and create autoencoder data
     def make_wavelet_train(self):
@@ -52,6 +52,9 @@ class PreProcessing:
         test = pd.DataFrame(test_data)
         test.to_csv("preprocessing/test_data.csv")
 
+        plt.plot(train_data[1])
+        plt.show()
+
     def make_test_data(self):
         test_stock = []
         # stock_data_test = pd.read_csv("stock_data_test.csv", index_col=0)
@@ -65,12 +68,7 @@ class PreProcessing:
         stock_test_data = np.array(test_stock)[int(self.feature_split*len(test_stock) +
                                                self.split*(1-self.feature_split)*len(test_stock)):]
         stock = pd.DataFrame(stock_test_data, index=None)
-        stock.to_csv("stock_data_test.csv")
-
-        # print(train_data[1:5])
-        # print(test_data[1:5])
-        # plt.plot(train_data[1])
-        # plt.show()
+        stock.to_csv("BTC-USD_daily_test.csv")
 
 
 if __name__ == "__main__":

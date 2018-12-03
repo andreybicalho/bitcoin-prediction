@@ -33,7 +33,7 @@ class NeuralNetwork:
 
         # train model
 
-        model.fit(train, train_y, epochs=2000)
+        model.fit(train, train_y, epochs=100)
 
         model.save("models/model.h5", overwrite=True, include_optimizer=True)
 
