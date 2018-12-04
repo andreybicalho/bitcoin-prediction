@@ -28,8 +28,7 @@ class AlphaVantage(object):
         df = pd.DataFrame(columns=['date', 'open', 'high', 'low', 'close', 'volume', 'maket cap'])
         for d,p in data.items():
             date = datetime.datetime.strptime(d,'%Y-%m-%d').strftime('%Y-%m-%d')
-            #data_row = [date, float(p['1a. open (USD)']),float(p['2a. high (USD)']),float(p['3a. low (USD)']),float(p['4a. close (USD)']),float(p['5. volume']),float(p['6. market cap (USD)'])]
-            data_row = [date, float(p['1a. open (USD)']),float(p['2a. high (USD)']),float(p['3a. low (USD)']),float(p['4a. close (USD)']),float(p['4b. close (USD)']),float(p['5. volume'])]
+            data_row = [date, float(p['1a. open (USD)']),float(p['2a. high (USD)']),float(p['3a. low (USD)']),float(p['4a. close (USD)']),float(p['5. volume']),float(p['6. market cap (USD)'])]            
             df.loc[-1,:] = data_row
             df.index = df.index + 1
 
@@ -42,4 +41,4 @@ class AlphaVantage(object):
 
 if __name__ == "__main__":
     av = AlphaVantage('GXEH3WTB0KG6CVPZ')
-    data = av.get_digital_currency_daily(symbol='BTC', market='USD', export_to_csv=True, csv_filename='BTC-USD_daily.csv')
+    data = av.get_digital_currency_daily(symbol='BTC', market='USD', export_to_csv=True, csv_filename='alphavantage_bitcoin_price.csv')
