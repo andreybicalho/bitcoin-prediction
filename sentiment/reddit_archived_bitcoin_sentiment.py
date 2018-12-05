@@ -50,7 +50,7 @@ class RedditArchivedBitcoinSentiment(object):
 
         if(r2.status_code == 200):
             data2 = json.loads(r2.text)
-            return data2['aggregate']['score']
+            return data2['aggregate']['score'], date
         else:
             print("Error return code = "+str(r2.status_code))
 
@@ -61,7 +61,7 @@ class RedditArchivedBitcoinSentiment(object):
         for i in range(number_of_days_back):
             #print(str(date.year)+'-'+str(date.month)+'-'+str(date.day))
             stamp = str(date.year)+'-'+str(date.month)+'-'+str(date.day)
-            value = self.__get_sentiment(date.year, date.month, date.day, verbose=verbose)
+            value, stamp = self.__get_sentiment(date.year, date.month, date.day, verbose=verbose)
             scores[(date.year, date.month, date.day)] = value
             date -= datetime.timedelta(days=1)
             target.write(stamp+','+str(value))
