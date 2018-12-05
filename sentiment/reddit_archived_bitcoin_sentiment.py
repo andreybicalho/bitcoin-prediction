@@ -50,7 +50,7 @@ class RedditArchivedBitcoinSentiment(object):
 
         if(r2.status_code == 200):
             data2 = json.loads(r2.text)
-            return data2['aggregate']['score'], date
+            return data2['aggregate']['score']
         else:
             print("Error return code = "+str(r2.status_code))
 
@@ -59,15 +59,24 @@ class RedditArchivedBitcoinSentiment(object):
         date = starting_search_date        
         target = open(outputfile, 'a')
         for i in range(number_of_days_back):
-            #print(str(date.year)+'-'+str(date.month)+'-'+str(date.day))
-            stamp = str(date.year)+'-'+str(date.month)+'-'+str(date.day)
-            value, stamp = self.__get_sentiment(date.year, date.month, date.day, verbose=verbose)
+            value = self.__get_sentiment(date.year, date.month, date.day, verbose=verbose)
             scores[(date.year, date.month, date.day)] = value
-            date -= datetime.timedelta(days=1)
+            stamp = self.format_date(date)
             target.write(stamp+','+str(value))
             target.write('\n')
             target.flush()
+            date -= datetime.timedelta(days=1)
         target.close()
+
+    def format_date(self, date):
+        month_string = str(date.month)
+        if len(month_string) < 2:
+            month_string = "0" + month_string
+        day_string = str(date.day)
+        if len(day_string) < 2:
+            day_string = "0" + day_string
+        date_str = str(date.year) +'-'+ month_string +'-'+ day_string
+        return date_str
 
 
 
