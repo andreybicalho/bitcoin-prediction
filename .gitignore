@@ -9,4 +9,4 @@ __pycache__
 .pytest_cache
 
 *.csv
-price_analysis/alphaai/models/
+*.json

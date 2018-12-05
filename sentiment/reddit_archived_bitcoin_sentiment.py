@@ -30,7 +30,12 @@ class RedditArchivedBitcoinSentiment(object):
 
         if(r1.status_code == 200):
             data1 = json.loads(r1.text)
-            archive_url = data1['archived_snapshots']['closest']['url']
+            if 'closest' in data1['archived_snapshots']:
+                archive_url = data1['archived_snapshots']['closest']['url']
+            else:
+                archive_url = None
+                print("closest key not present")
+                print(data1)
         else:
             archive_url = None
             print("Error return code = "+str(r1.status_code))
@@ -68,6 +73,6 @@ class RedditArchivedBitcoinSentiment(object):
 
 if __name__ == '__main__':
     rsc = RedditArchivedBitcoinSentiment(havenondemand_api_key='82dac440-e844-4ea7-87be-837989b98acc')
-    #date = datetime.date(2017, 12, 30)
-    date = datetime.datetime.now().date()
+    date = datetime.date(2016, 6, 10)
+    #date = datetime.datetime.now().date()
     rsc.make_sentiment_dataset(outputfile='reddit_bitcoin_sentiment.csv', number_of_days_back=2000, starting_search_date=date, verbose=True)
