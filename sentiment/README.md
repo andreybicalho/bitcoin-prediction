@@ -2,13 +2,13 @@
 
 Using data from social media (twitter, reddit, coindesk) to perform sentiment analysis and predict bitcoin price.
 
-##### Usage #####
-### Training Phase
+# Usage
+### Training/Testing Phase
 
 * 1 - Generates bitcoin sentiment dataset from reddit; reddit_archived_bitcoin_sentiment.py - output: reddit_bitcoin_sentiment.csv
 * 2 - Generates bitcoin price dataset from alphavantage; alphavantage.py - output: alphavantage_bitcoin_price.csv
 * 3 - Merge both sentiment and price datasets; merge_data.py - output: merged_data.csv
-* 4 - 
+* 4 - Build the model (train and test); build_model.py - output: model.h5
 * 5 - 
 
 ### Live Phase
@@ -21,3 +21,7 @@ Using data from social media (twitter, reddit, coindesk) to perform sentiment an
 # Credits
 
 Credits for this code go to [sapphirine](https://github.com/Sapphirine/BITCOIN-PRICE-PREDICTION-USING-SENTIMENT-ANALYSIS). 
+
+#
+Python 3.5
+#
