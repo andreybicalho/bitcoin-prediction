@@ -19,7 +19,7 @@ Price-Polarity-LSTM (pp-lstm) uses sentiment data (polarity) from social media (
     ```
 * Build the model (train and test):
     ```
-        python build_model.py --look_back 2 --sent --s --d merged_data.csv
+        python build_model.py --lookback 2 --sent --s --d merged_data.csv
     ```
 
 ### Live Phase

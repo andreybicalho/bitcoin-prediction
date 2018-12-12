@@ -1,12 +1,12 @@
-
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import mean_squared_error
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
+from keras.models import load_model
 from math import sqrt
-from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 import argparse
 
@@ -14,7 +14,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--d", dest="dataset", nargs='?', default='merged_data.csv')
 parser.add_argument("--lookback", dest="look_back", nargs='?', type=int, default=2)
 parser.add_argument("--sent", dest="use_sentiment", action='store_true')
-parser.add_argument("--s", dest="save_model", action='store_true')
 args = parser.parse_args()
 
 # 1 - Loading dataset
@@ -56,7 +55,7 @@ def create_look_back_dataset(price_data, sentiment_data, look_back, use_sentimen
                 a = np.hstack([a, b])
             a = a.tolist()            
             dataX.append(a)
-            dataY.append(price_data[i+look_back, 5]) # use the next day closing price for the dependent variable
+            dataY.append(price_data[i+look_back, 5]) # use the next day close price for the dependent variable
     return np.array(dataX), np.array(dataY)
 
 look_back = args.look_back
@@ -64,17 +63,9 @@ use_sentiment = args.use_sentiment
 trainX, trainY = create_look_back_dataset(train, sentiment[0:train_size], look_back, use_sentiment)
 testX, testY = create_look_back_dataset(test, sentiment[train_size:len(scaled_prices)], look_back, use_sentiment)
 
-# 4 - Training the LSTM
-model = Sequential()
-model.add(LSTM(100, input_shape=(trainX.shape[1], trainX.shape[2]), return_sequences=True))
-model.add(LSTM(100))
-model.add(Dense(1))
-model.compile(loss='mae', optimizer='adam')
-#history = model.fit(trainX, trainY, epochs=300, batch_size=100, validation_data=(testX, testY), verbose=0, shuffle=False)
-history = model.fit(trainX, trainY, epochs=50, batch_size=100, shuffle=False)
 
-if args.save_model:
-    model.save("model.h5")
+# 4 - 
+model = load_model('model.h5')
 
 # 5 - Testing the LSTM
 yhat_test = model.predict(testX)
