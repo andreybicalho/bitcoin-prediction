@@ -1,36 +1,36 @@
 # Overview
 
-Price-Polarity-LSTM (pp-lstm) uses its sentiment data (polarity) from social media (twitter and reddit), as well as price features (open, close, low, high, volume and market capitalization) to predict bitcoin future price.
+Price-Polarity-LSTM (pp-lstm) uses sentiment data (polarity) from social media (twitter and reddit), as well as price features (open, close, low, high, volume and market capitalization) to predict bitcoin future price.
 
 # Usage
 ### Training/Testing Phase
 
-* 1 - Generates bitcoin sentiment dataset from reddit: 
+* Generates bitcoin sentiment dataset from reddit: 
     ```
-        reddit_archived_bitcoin_sentiment.py
+        python reddit_archived_bitcoin_sentiment.py --o reddit_bitcoin_sentiment.csv
     ```
   Output: reddit_bitcoin_sentiment.csv
-* 2 - Generates bitcoin price dataset from alphavantage: 
+* Generates bitcoin price dataset from alphavantage: 
     ```
-        alphavantage.py
+        python alphavantage.py --o alphavantage_bitcoin_price.csv
     ```
     Output: alphavantage_bitcoin_price.csv
-* 3 - Merge both sentiment and price datasets: 
-  ```
-    merge_data.py --s reddit_bitcoin_sentiment.csv --p alphavantage_bitcoin_price.csv
-  ```
+* Merge both sentiment and price datasets: 
+    ```
+        python merge_data.py --s reddit_bitcoin_sentiment.csv --p alphavantage_bitcoin_price.csv
+    ```
   Output: merged_data.csv
-* 4 - Build the model (train and test):
+* Build the model (train and test):
     ```
-        build_model.py --look_back 2 --sent --s --d merged_data.csv
+        python build_model.py --look_back 2 --sent --s --d merged_data.csv
     ```
-* 5 - 
 
 ### Live Phase
-* live_twitter_sentiment.py continously collects twitter sentiment data till user press ctrl+c - output: bitcoin_tweets.json
-* 
-* 
-
+* Continously collects twitter sentiment data till user press ctrl+c - 
+    ```
+        live_twitter_sentiment.py 
+    ``` 
+    Output: bitcoin_tweets.json
 
 
 # Credits

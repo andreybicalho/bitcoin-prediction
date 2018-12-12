@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import datetime
-
+import argparse
 
 class RedditArchivedBitcoinSentiment(object):
     """
@@ -81,7 +81,11 @@ class RedditArchivedBitcoinSentiment(object):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--o", dest="output_file", nargs='?', default='reddit_bitcoin_sentiment.csv')
+    args = parser.parse_args()
+    
     rsc = RedditArchivedBitcoinSentiment(havenondemand_api_key='82dac440-e844-4ea7-87be-837989b98acc')
     date = datetime.date(2016, 6, 10)
     #date = datetime.datetime.now().date()
-    rsc.make_sentiment_dataset(outputfile='reddit_bitcoin_sentiment.csv', number_of_days_back=2000, starting_search_date=date, verbose=True)
+    rsc.make_sentiment_dataset(outputfile=args.output_file, number_of_days_back=2000, starting_search_date=date, verbose=True)

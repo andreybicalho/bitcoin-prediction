@@ -1,6 +1,7 @@
 import requests
 import datetime
 import pandas as pd
+import argparse
 
 class AlphaVantage(object):
 
@@ -42,5 +43,9 @@ class AlphaVantage(object):
         return data
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--o", dest="output_file", nargs='?', default='alphavantage_bitcoin_price.csv')
+    args = parser.parse_args()
+
     av = AlphaVantage('GXEH3WTB0KG6CVPZ')
-    data = av.get_digital_currency_daily(symbol='BTC', market='USD', export_to_csv=True, csv_filename='alphavantage_bitcoin_price.csv')
+    data = av.get_digital_currency_daily(symbol='BTC', market='USD', export_to_csv=True, csv_filename=args.output_file)

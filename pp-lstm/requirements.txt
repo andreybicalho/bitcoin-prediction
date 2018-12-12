@@ -8,3 +8,4 @@ pandas
 textblob 
 tweepy 
 argparse 
+selenium 
