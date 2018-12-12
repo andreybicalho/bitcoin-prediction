@@ -7,19 +7,16 @@ Price-Polarity-LSTM (pp-lstm) uses sentiment data (polarity) from social media (
 
 * Generates bitcoin sentiment dataset from reddit: 
     ```
-        python reddit_archived_bitcoin_sentiment.py --o reddit_bitcoin_sentiment.csv
+        python reddit_archived_bitcoin_sentiment.py --o reddit_bitcoin_sentiment.csv --d 2018/12/01 --n 2000 --v --k your_havenondemand_api_key
     ```
-  Output: reddit_bitcoin_sentiment.csv
 * Generates bitcoin price dataset from alphavantage: 
     ```
-        python alphavantage.py --o alphavantage_bitcoin_price.csv
+        python alphavantage.py --o alphavantage_bitcoin_price.csv --s BTC --m USD --k your_alphavantage_api_key
     ```
-    Output: alphavantage_bitcoin_price.csv
 * Merge both sentiment and price datasets: 
     ```
-        python merge_data.py --s reddit_bitcoin_sentiment.csv --p alphavantage_bitcoin_price.csv
+        python merge_data.py --s reddit_bitcoin_sentiment.csv --p alphavantage_bitcoin_price.csv --o merged_data.csv
     ```
-  Output: merged_data.csv
 * Build the model (train and test):
     ```
         python build_model.py --look_back 2 --sent --s --d merged_data.csv

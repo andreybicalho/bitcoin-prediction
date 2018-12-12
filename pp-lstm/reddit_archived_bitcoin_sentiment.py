@@ -1,11 +1,4 @@
-from pprint import pprint
 import requests, json
-import selenium
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import time
 import datetime
 import argparse
 
@@ -83,9 +76,13 @@ class RedditArchivedBitcoinSentiment(object):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--o", dest="output_file", nargs='?', default='reddit_bitcoin_sentiment.csv')
+    parser.add_argument("--d", dest="date", nargs='?', default=datetime.datetime.now().date())
+    parser.add_argument("--n", dest="number_days_back", nargs='?', type=int, default=365)
+    parser.add_argument("--v", dest="verbose", action='store_true')
+    parser.add_argument("--k", dest="havenondemand_api_key", nargs='?', default='82dac440-e844-4ea7-87be-837989b98acc')
     args = parser.parse_args()
+
+    date = datetime.datetime.strptime(args.date, '%Y/%m/%d')
     
-    rsc = RedditArchivedBitcoinSentiment(havenondemand_api_key='82dac440-e844-4ea7-87be-837989b98acc')
-    date = datetime.date(2016, 6, 10)
-    #date = datetime.datetime.now().date()
-    rsc.make_sentiment_dataset(outputfile=args.output_file, number_of_days_back=2000, starting_search_date=date, verbose=True)
+    rsc = RedditArchivedBitcoinSentiment(havenondemand_api_key=args.havenondemand_api_key)
+    rsc.make_sentiment_dataset(outputfile=args.output_file, number_of_days_back=args.number_days_back, starting_search_date=date, verbose=args.verbose)
