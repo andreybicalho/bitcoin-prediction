@@ -5,6 +5,7 @@ from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
+from keras.layers import Dropout
 from math import sqrt
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
@@ -63,10 +64,12 @@ look_back = args.look_back
 use_sentiment = args.use_sentiment
 trainX, trainY = create_look_back_dataset(train, sentiment[0:train_size], look_back, use_sentiment)
 testX, testY = create_look_back_dataset(test, sentiment[train_size:len(scaled_prices)], look_back, use_sentiment)
+#print(trainX.shape[1], trainX.shape[2])
 
 # 4 - Training the LSTM
 model = Sequential()
 model.add(LSTM(100, input_shape=(trainX.shape[1], trainX.shape[2]), return_sequences=True))
+model.add(Dropout(0.2))
 model.add(LSTM(100))
 model.add(Dense(1))
 model.compile(loss='mae', optimizer='adam')
@@ -78,10 +81,6 @@ if args.save_model:
 
 # 5 - Testing the LSTM
 yhat_test = model.predict(testX)
-
-# TODO: inverse transform to get the price
-#yhat_inverse = scaler.inverse_transform(yhat.reshape(-1, 1))
-#testY_inverse = scaler.inverse_transform(testY.reshape(-1, 1))
 
 rmse = sqrt(mean_squared_error(testY, yhat_test))
 print(f'Test RMSE: {rmse}')
@@ -103,6 +102,25 @@ plt.plot(testY, label='Groundtruth', color='orange')
 plt.plot(yhat_test, label='Predicted', color='purple')
 plt.title("Test")
 plt.ylabel("Scaled Price")
+plt.legend(loc='upper left')
+
+plt.show()
+
+# 7 - Plot price (Inverse transform)
+a = np.zeros((yhat_test.shape[0], 5))
+yhat_test = np.hstack([a, yhat_test])
+yhat_test_inverse = scaler.inverse_transform(yhat_test)
+predicted_price = yhat_test_inverse[:, 5]
+
+testY = testY.reshape(-1, 1)
+testY = np.hstack([a, testY])
+testY_inverse = scaler.inverse_transform(testY)
+real_price = testY_inverse[:, 5]
+
+plt.plot(real_price, label='Real', color='orange')
+plt.plot(predicted_price, label='Predicted', color='purple')
+plt.title("Predicted vs Real")
+plt.ylabel("US$ Price")
 plt.legend(loc='upper left')
 
 plt.show()

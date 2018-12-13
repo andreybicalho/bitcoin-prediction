@@ -70,10 +70,6 @@ model = load_model('model.h5')
 # 5 - Testing the LSTM
 yhat_test = model.predict(testX)
 
-# TODO: inverse transform to get the price
-#yhat_inverse = scaler.inverse_transform(yhat.reshape(-1, 1))
-#testY_inverse = scaler.inverse_transform(testY.reshape(-1, 1))
-
 rmse = sqrt(mean_squared_error(testY, yhat_test))
 print(f'Test RMSE: {rmse}')
 
@@ -94,6 +90,25 @@ plt.plot(testY, label='Groundtruth', color='orange')
 plt.plot(yhat_test, label='Predicted', color='purple')
 plt.title("Test")
 plt.ylabel("Scaled Price")
+plt.legend(loc='upper left')
+
+plt.show()
+
+# 7 - Plot price (Inverse transform)
+a = np.zeros((yhat_test.shape[0], 5))
+yhat_test = np.hstack([a, yhat_test])
+yhat_test_inverse = scaler.inverse_transform(yhat_test)
+predicted_price = yhat_test_inverse[:, 5]
+
+testY = testY.reshape(-1, 1)
+testY = np.hstack([a, testY])
+testY_inverse = scaler.inverse_transform(testY)
+real_price = testY_inverse[:, 5]
+
+plt.plot(real_price, label='Real', color='orange')
+plt.plot(predicted_price, label='Predicted', color='purple')
+plt.title("Predicted vs Real")
+plt.ylabel("US$ Price")
 plt.legend(loc='upper left')
 
 plt.show()
