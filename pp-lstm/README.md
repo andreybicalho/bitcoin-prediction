@@ -1,6 +1,10 @@
-# Overview
+# Bitcoin-Prediction 
 
-Price-Polarity-LSTM (pp-lstm) uses sentiment data (polarity) from social media (twitter and reddit), as well as price features (open, close, low, high, volume and market capitalization) to predict bitcoin future price.
+This project is an attempt to build strong indicators to use in criptocurrency trading. The main strategy is concerned in combining Sentiment and Price Analysis by using recent techniques in Artificial Intelligence (AI).
+
+# Price-Polarity-LSTM (pp-lstm)
+
+Price-Polarity-LSTM (pp-lstm) uses sentiment data (polarity) from social media (twitter and reddit), as well as price features (open, close, low, high, volume and market capitalization) and a special kind of Recurrent Neural Network (RNN) known as Long Short Term Memory network (LSTM) to predict bitcoin future price.
 
 # Usage
 ### Training/Testing Phase
@@ -22,17 +26,16 @@ Price-Polarity-LSTM (pp-lstm) uses sentiment data (polarity) from social media (
         python build_model.py --lookback 2 --sent --s --d merged_data.csv
     ```
 
-### Live Phase
+# Results
+
+![Results](ex1.png)
+
+### Live Phase (in development...)
 * Continously collects twitter sentiment data till user press ctrl+c - 
     ```
         live_twitter_sentiment.py 
     ``` 
-    Output: bitcoin_tweets.json
-
-
-# Credits
-
-Credits for this code go to [sapphirine](https://github.com/Sapphirine/BITCOIN-PRICE-PREDICTION-USING-SENTIMENT-ANALYSIS). 
+    Output: bitcoin_tweets.json 
 
 # Requirements
 Python 3.6
@@ -40,4 +43,7 @@ Python 3.6
 ```bash
 pip install -r requirements.txt
 ```
-#
+
+# Future work
+
+* Reinforcement Learning
