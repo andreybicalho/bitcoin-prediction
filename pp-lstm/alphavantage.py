@@ -1,6 +1,7 @@
 import requests
 import datetime
 import pandas as pd
+import argparse
 
 class AlphaVantage(object):
 
@@ -28,8 +29,9 @@ class AlphaVantage(object):
         df = pd.DataFrame(columns=['date', 'open', 'high', 'low', 'close', 'volume', 'maket cap'])
         for d,p in data.items():
             date = datetime.datetime.strptime(d,'%Y-%m-%d').strftime('%Y-%m-%d')
-            #data_row = [date, float(p['1a. open (USD)']),float(p['2a. high (USD)']),float(p['3a. low (USD)']),float(p['4a. close (USD)']),float(p['5. volume']),float(p['6. market cap (USD)'])]
-            data_row = [date, float(p['1a. open (USD)']),float(p['2a. high (USD)']),float(p['3a. low (USD)']),float(p['4a. close (USD)']),float(p['4b. close (USD)']),float(p['5. volume'])]
+            #date = datetime.datetime.strptime(d,'%Y-%m-%d')
+            #date = str(date.year)+'-'+str(date.month)+'-'+str(date.day)
+            data_row = [date, float(p['1a. open (USD)']),float(p['2a. high (USD)']),float(p['3a. low (USD)']),float(p['4a. close (USD)']),float(p['5. volume']),float(p['6. market cap (USD)'])]            
             df.loc[-1,:] = data_row
             df.index = df.index + 1
 
@@ -41,5 +43,12 @@ class AlphaVantage(object):
         return data
 
 if __name__ == "__main__":
-    av = AlphaVantage('GXEH3WTB0KG6CVPZ')
-    data = av.get_digital_currency_daily(symbol='BTC', market='USD', export_to_csv=True, csv_filename='BTC-USD_daily.csv')
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--o", dest="output_file", nargs='?', default='alphavantage_bitcoin_price.csv')
+    parser.add_argument("--k", dest="alphavantage_api_key", nargs='?', default='GXEH3WTB0KG6CVPZ')
+    parser.add_argument("--s", dest="symbol", nargs='?', default='BTC')
+    parser.add_argument("--m", dest="market", nargs='?', default='USD')
+    args = parser.parse_args()
+
+    av = AlphaVantage(args.alphavantage_api_key)
+    data = av.get_digital_currency_daily(symbol=args.symbol, market=args.market, export_to_csv=True, csv_filename=args.output_file)

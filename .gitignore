@@ -8,5 +8,6 @@ __pycache__
 .cache
 .pytest_cache
 
-*.csv
-price_analysis/alphaai/models/
+#*.csv
+*.json
+*.h5
