@@ -28,7 +28,7 @@ Price-Polarity-LSTM (pp-lstm) uses sentiment data (polarity) from social media (
 
 # Results
 
-![Results](pp-lstm/ex1.png)
+![Results](ex1.png)
 
 ### Live Phase (in development...)
 * Continously collects twitter sentiment data till user press ctrl+c - 
@@ -47,4 +47,3 @@ pip install -r requirements.txt
 # Future work
 
 * Reinforcement Learning
-* Live Phase 
