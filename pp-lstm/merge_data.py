@@ -16,5 +16,10 @@ print('btc_sentiment_dataset: '+str(btc_sentiment_dataset.shape))
 btc_sentiment_dataset.columns = ["date", "sentiment"]
 #merged = btc_sentiment_dataset.merge(btc_price_dataset, on='date', left_index=False, right_index=False, how="inner")
 merged = pd.merge(btc_price_dataset, btc_sentiment_dataset, how='inner', on='date')
-merged.to_csv(args.output_file, index=False)
 print('merged: '+str(merged.shape))
+
+# 
+merged['date'] = pd.to_datetime(merged['date'], format='%Y-%m-%d')
+data = merged.sort_values(['date'])
+
+data.to_csv(args.output_file, index=False)

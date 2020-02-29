@@ -35,8 +35,6 @@ class AlphaVantage(object):
             df.loc[-1,:] = data_row
             df.index = df.index + 1
 
-        data = df.sort_values('date')
-
         if export_to_csv:
             data.to_csv(csv_filename, index=False)
 
