@@ -43,7 +43,7 @@ class AlphaVantage(object):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--o", dest="output_file", nargs='?', default='alphavantage_bitcoin_price.csv')
-    parser.add_argument("--k", dest="alphavantage_api_key", nargs='?', default='GXEH3WTB0KG6CVPZ')
+    parser.add_argument("--k", dest="alphavantage_api_key", nargs='?', default='')
     parser.add_argument("--s", dest="symbol", nargs='?', default='BTC')
     parser.add_argument("--m", dest="market", nargs='?', default='USD')
     args = parser.parse_args()

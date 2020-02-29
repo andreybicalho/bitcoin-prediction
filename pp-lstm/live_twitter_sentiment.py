@@ -107,10 +107,10 @@ class LiveTwitterSentiment(StreamListener):
 if __name__ == '__main__':
 
     #Variables that contains the user credentials to access Twitter API 
-    access_token = "871839144858841088-5wUJse23AsFY04TYn5dhDlCOJp89GTu"
-    access_token_secret = "aF4aTO4K6vwgiUAyemiPFSdkVh2zUw0zP6EHjNxhviNLw"
-    consumer_key = "o6iXSNMniEONkZpZs0Oe3Lwhr"
-    consumer_secret = "hIo1npGv2MObPbYfz3WNncwE3JuvY4f95FRkiBD5fvDiQ5iXLL"
+    access_token = ""
+    access_token_secret = ""
+    consumer_key = ""
+    consumer_secret = ""
 
     tsc = LiveTwitterSentiment(outputfile='bitcoin_tweets.json', verbose=False)
     auth = OAuthHandler(consumer_key, consumer_secret)
